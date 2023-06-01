@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Asteroids
+  m_EditorClassIdentifier: 
+  m_GroupName: Asteroids
+  m_Data:
+    m_SerializedData: []
+  m_GUID: cb5db8b43550e4b8e92a35e7c55039d4
+  m_SerializeEntries:
+  - m_GUID: 7700b194361bd494ca80e6d0d04d33c1
+    m_Address: big-asteroid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 323044ba671304edba75cfaa9c6810eb
+    m_Address: medium-asteroid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a0cf80c75d644853bd8f93390d989e6
+    m_Address: small-asteroid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 59d85d56435cd413098422e7a5f6b35b, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e601c8893e0264a29b907c1bbb3a4721, type: 2}
+    - {fileID: 11400000, guid: 2164e98ec0d0f4e2fa6cee7b83debb6b, type: 2}
