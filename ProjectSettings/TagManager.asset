@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Asteroid
+  - PlayerBullet
+  - AlienBullet
   layers:
   - Default
   - TransparentFX
@@ -11,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Asteroid
+  - PlayerShip
+  - Alien
+  - AlienBullet
+  - PlayerBullet
   - 
   - 
   - 
