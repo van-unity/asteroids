@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff842b70e0f4f6d9281a93212cbe6bb, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  _bigAsteroidSpeedRange: {x: 1, y: 2}
+  _mediumAsteroidSpeedRange: {x: 1.5, y: 2.5}
+  _smallAsteroidSpeedRange: {x: 2, y: 3}
+  _bigAsteroidAngularVelocityRange: {x: 100, y: 180}
+  _mediumAsteroidAngularVelocityRange: {x: 180, y: 270}
+  _smallAsteroidAngularVelocityRange: {x: 270, y: 360}
+  _asteroidsSpeedLevelMultiplier: 1.5

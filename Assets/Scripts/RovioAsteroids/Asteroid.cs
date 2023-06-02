@@ -21,14 +21,6 @@ namespace RovioAsteroids {
             _triggerEnterHandlers = _gameObject.GetComponents<IAsteroidTriggerEnterHandler>();
         }
 
-        private async void OnEnable() {
-            while (_outOfBoundsChecker == null) {
-                await Task.Yield();
-            }
-
-            _outOfBoundsChecker.Register(_transform);
-        }
-
         public void SetParent(Transform parent) {
             _transform.SetParent(parent);
         }
@@ -41,6 +33,10 @@ namespace RovioAsteroids {
             _transform.position = position;
         }
 
+        public void SetAngularVelocity(float angularVelocity) {
+            _rigidbody.AddTorque(angularVelocity);
+        }
+
         private void OnTriggerEnter(Collider other) {
             foreach (var triggerEnterHandler in _triggerEnterHandlers) {
                 triggerEnterHandler.HandleTriggerEnter(this, other);
@@ -49,10 +45,12 @@ namespace RovioAsteroids {
 
         public void SetActive(bool isActive) {
             _gameObject.SetActive(isActive);
-        }
-
-        private void OnDisable() {
-            _outOfBoundsChecker.UnRegister(_transform);
+            if (isActive) {
+                _outOfBoundsChecker.Register(_transform);
+            }
+            else {
+                _outOfBoundsChecker.UnRegister(_transform);
+            }
         }
     }
 }

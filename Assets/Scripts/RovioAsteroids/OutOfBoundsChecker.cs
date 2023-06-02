@@ -23,41 +23,22 @@ namespace RovioAsteroids {
 
         private void LateUpdate() {
             foreach (var item in _items) {
-                Vector3 viewportPosition = _mainCamera.WorldToViewportPoint(item.position);
-                if (viewportPosition.x > 1) {
-                    viewportPosition.x = 0;
-                }
-                else if (viewportPosition.x < 0) {
-                    viewportPosition.x = 1;
-                }
+                var viewportPosition = _mainCamera.WorldToViewportPoint(item.position);
 
-                if (viewportPosition.y > 1) {
-                    viewportPosition.y = 0;
-                }
-                else if (viewportPosition.y < 0) {
-                    viewportPosition.y = 1;
-                }
+                viewportPosition.x = viewportPosition.x switch {
+                    > 1 => 0,
+                    < 0 => 1,
+                    _ => viewportPosition.x
+                };
+
+                viewportPosition.y = viewportPosition.y switch {
+                    > 1 => 0,
+                    < 0 => 1,
+                    _ => viewportPosition.y
+                };
 
                 item.position = _mainCamera.ViewportToWorldPoint(viewportPosition);
-                // if (IsObjectOffScreen(item)) {
-                //     var itemPosition = item.position;
-                //     itemPosition.y *= -.9f;
-                //     item.position = itemPosition;
-                // }
             }
-        }
-
-        private bool IsObjectOffScreen(Transform itemTransform) {
-            // Convert the object's world position to viewport coordinates
-            Vector3 viewportPosition = _mainCamera.WorldToViewportPoint(itemTransform.position);
-
-            // Check if the viewport coordinates fall outside the visible screen area
-            if (viewportPosition.x < 0 || viewportPosition.x > 1 ||
-                viewportPosition.y < 0 || viewportPosition.y > 1) {
-                return true;
-            }
-
-            return false;
         }
     }
 }
