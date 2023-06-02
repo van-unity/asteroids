@@ -1,15 +1,14 @@
 using System.Threading.Tasks;
+using UnityEngine;
+using Zenject;
 
 namespace RovioAsteroids {
-    public class AsteroidPool : ObjectPoolBase<IAsteroid> {
-        private readonly IAsteroidFactory _factory;
-        private readonly AsteroidType _asteroidType;
+    public class AsteroidPool : MonoBehaviourObjectPoolBase<IAsteroid> {
+        [SerializeField] private AsteroidType _asteroidType;
+        [Inject] private readonly IAsteroidFactory _factory;
 
-        public AsteroidPool(int size, IAsteroidFactory factory, AsteroidType asteroidType) : base(size) {
-            _factory = factory;
-            _asteroidType = asteroidType;
+        protected override Task<IAsteroid> Create() {
+            return _factory.CreateAsync(_asteroidType);
         }
-
-        protected override Task<IAsteroid> Create() => _factory.CreateAsync(_asteroidType);
     }
 }

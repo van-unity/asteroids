@@ -1,21 +1,25 @@
 using System;
 using System.Threading.Tasks;
-using Zenject;
+using UnityEngine;
 
 namespace RovioAsteroids {
-    public abstract class ObjectPoolBase<T> : IInitializable, IPool<T> where T : ISpawnable {
-        public bool IsReady { get; private set; }
-        private int _size;
+    public abstract class MonoBehaviourObjectPoolBase<T> : MonoBehaviour, IPool<T> where T : ISpawnable {
+        [SerializeField] private Transform _container;
+        [SerializeField] private int _size;
         private T[] _pool;
 
-        public ObjectPoolBase(int size) {
-            _size = size;
+        public bool IsReady { get; private set; }
+
+        private async void Start() {
+            await InitializeAsync();
         }
 
-        public async void Initialize() {
+        private async Task InitializeAsync() {
             _pool = new T[_size];
             for (int i = 0; i < _size; i++) {
                 _pool[i] = await Create();
+                _pool[i].SetParent(_container);
+                _pool[i].SetActive(false);
             }
 
             IsReady = true;
@@ -29,24 +33,24 @@ namespace RovioAsteroids {
                     continue;
                 }
 
-                spawnable.OnSpawn();
+                spawnable.SetActive(true);
                 return spawnable;
             }
 
             Array.Resize(ref _pool, ++_size);
             var newItem = await Create();
             _pool[_size - 1] = newItem;
-            newItem.OnSpawn();
+            newItem.SetActive(true);
             return newItem;
         }
 
         public void Despawn(T objectToDespawn) {
-            objectToDespawn.OnDespawn();
+            objectToDespawn.SetActive(false);
         }
 
-        public void Reset() {
+        public void Clear() {
             foreach (var spawnable in _pool) {
-                spawnable.OnDespawn();
+                spawnable.SetActive(false);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -20,16 +21,16 @@ namespace RovioAsteroids {
             _triggerEnterHandlers = _gameObject.GetComponents<IAsteroidTriggerEnterHandler>();
         }
 
-        private void OnEnable() {
+        private async void OnEnable() {
+            while (_outOfBoundsChecker == null) {
+                await Task.Yield();
+            }
+
             _outOfBoundsChecker.Register(_transform);
         }
 
-        public void OnSpawn() {
-            _gameObject.SetActive(true);
-        }
-
-        public void OnDespawn() {
-            _gameObject.SetActive(false);
+        public void SetParent(Transform parent) {
+            _transform.SetParent(parent);
         }
 
         public void SetVelocity(Vector2 velocity) {
@@ -44,6 +45,10 @@ namespace RovioAsteroids {
             foreach (var triggerEnterHandler in _triggerEnterHandlers) {
                 triggerEnterHandler.HandleTriggerEnter(this, other);
             }
+        }
+
+        public void SetActive(bool isActive) {
+            _gameObject.SetActive(isActive);
         }
 
         private void OnDisable() {

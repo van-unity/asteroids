@@ -9,6 +9,9 @@ TagManager:
   - SmallAsteroid
   - BigAsteroid
   - MediumAsteroid
+  - BigAsteroidPool
+  - MediumAsteroidPool
+  - SmallAsteroidPool
   layers:
   - Default
   - TransparentFX
