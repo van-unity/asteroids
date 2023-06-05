@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -11,6 +13,7 @@ namespace RovioAsteroids {
         private IPool<IBullet> _pool;
 
         [Inject] private readonly IOutOfBoundsChecker _outOfBoundsChecker;
+        private CancellationTokenSource _registerCancellation;
 
         private void Awake() {
             _transform = transform;
@@ -18,12 +21,12 @@ namespace RovioAsteroids {
         }
 
         private async void OnEnable() {
+            _registerCancellation = new CancellationTokenSource();
             while (_outOfBoundsChecker == null) {
-                await Task.Delay((int)(Time.deltaTime * 1000));
+                await Task.Delay((int)(Time.deltaTime * 1000), _registerCancellation.Token);
             }
 
             _outOfBoundsChecker.Register(this);
-            Debug.LogError("eneble");
         }
 
         private void Start() {
@@ -38,7 +41,10 @@ namespace RovioAsteroids {
 
         private void OnDisable() {
             _outOfBoundsChecker.UnRegister(this);
-            Debug.LogError("disable");
+        }
+
+        private void OnDestroy() {
+            _registerCancellation.Cancel();
         }
     }
 }

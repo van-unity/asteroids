@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public interface IAsteroidTriggerEnterHandler {
+public interface IAsteroidTriggerHandler {
     void HandleTriggerEnter(IAsteroid asteroid, Collider2D other);
 }

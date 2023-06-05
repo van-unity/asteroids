@@ -26,7 +26,8 @@ namespace RovioAsteroids {
         }
 
         private void LateUpdate() {
-            foreach (var item in _items) {
+            for (var index = 0; index < _items.Count; index++) {
+                var item = _items[index];
                 var viewportPosition = _mainCamera.WorldToViewportPoint(item.GetPosition());
 
                 if (viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 ||

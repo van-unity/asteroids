@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -11,13 +12,16 @@ namespace RovioAsteroids {
         [Inject] private readonly IMainCamera _mainCamera;
         [Inject] private readonly IOutOfBoundsChecker _outOfBoundsChecker;
 
+        private CancellationTokenSource _registerCancellation;
+
         private void Awake() {
             _transform = transform;
         }
 
         private async void OnEnable() {
+            _registerCancellation = new CancellationTokenSource();
             while (_outOfBoundsChecker == null) {
-                await Task.Delay((int)(Time.deltaTime * 1000));
+                await Task.Delay((int)(Time.deltaTime * 1000), _registerCancellation.Token);
             }
 
             _outOfBoundsChecker.Register(this);
@@ -45,6 +49,10 @@ namespace RovioAsteroids {
 
         private void OnDisable() {
             _outOfBoundsChecker.UnRegister(this);
+        }
+
+        private void OnDestroy() {
+            _registerCancellation.Cancel();
         }
     }
 }
