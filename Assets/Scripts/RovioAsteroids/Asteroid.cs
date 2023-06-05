@@ -4,10 +4,12 @@ using Zenject;
 
 namespace RovioAsteroids {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class Asteroid : MonoBehaviour, IAsteroid {
         private GameObject _gameObject;
         private Transform _transform;
         private Rigidbody2D _rigidbody;
+        private Collider2D _collider2D;
         private IAsteroidTriggerHandler[] _triggerEnterHandlers;
 
         public bool IsActive => _gameObject.activeSelf;
@@ -16,6 +18,7 @@ namespace RovioAsteroids {
             _gameObject = gameObject;
             _transform = _gameObject.GetComponent<Transform>();
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
+            _collider2D = _gameObject.GetComponent<Collider2D>();
             _triggerEnterHandlers = _gameObject.GetComponents<IAsteroidTriggerHandler>();
         }
 
@@ -45,6 +48,14 @@ namespace RovioAsteroids {
 
         public void SetActive(bool isActive) {
             _gameObject.SetActive(isActive);
+        }
+
+        public void OnSpawn() {
+            _collider2D.enabled = true;
+        }
+
+        public void OnDespawn() {
+            _collider2D.enabled = false;
         }
     }
 }

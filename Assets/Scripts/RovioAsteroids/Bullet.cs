@@ -2,10 +2,13 @@ using UnityEngine;
 
 namespace RovioAsteroids {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class Bullet : MonoBehaviour, IBullet {
         private GameObject _gameObject;
         private Transform _transform;
         private Rigidbody2D _rigidbody;
+        private Collider2D _collider2D;
+        
         private IBulletTriggerHandler[] _triggerHandlers;
         
         public bool IsActive => _gameObject.activeSelf;
@@ -14,6 +17,7 @@ namespace RovioAsteroids {
             _gameObject = gameObject;
             _transform = _gameObject.transform;
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
+            _collider2D = _gameObject.GetComponent<Collider2D>();
             _triggerHandlers = GetComponents<IBulletTriggerHandler>();
         }
 
@@ -37,6 +41,14 @@ namespace RovioAsteroids {
             foreach (var triggerHandler in _triggerHandlers) {
                 triggerHandler.HandleTriggerEnter(this, col);
             }
+        }
+
+        public void OnSpawn() {
+            _collider2D.enabled = true;
+        }
+
+        public void OnDespawn() {
+            _collider2D.enabled = false;
         }
     }
 }

@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff842b70e0f4f6d9281a93212cbe6bb, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  _bigAsteroidSpeedRange: {x: 0.5, y: 1}
+  _bigAsteroidSpeedRange: {x: 0.1, y: 1}
   _mediumAsteroidSpeedRange: {x: 1, y: 1.5}
-  _smallAsteroidSpeedRange: {x: 2, y: 2.5}
-  _bigAsteroidAngularVelocityRange: {x: 60, y: 120}
-  _mediumAsteroidAngularVelocityRange: {x: 120, y: 180}
-  _smallAsteroidAngularVelocityRange: {x: 180, y: 270}
+  _smallAsteroidSpeedRange: {x: 1.5, y: 3}
+  _bigAsteroidAngularVelocityRange: {x: 5, y: 15}
+  _mediumAsteroidAngularVelocityRange: {x: 5, y: 15}
+  _smallAsteroidAngularVelocityRange: {x: 1, y: 5}
   _asteroidsSpeedLevelMultiplier: 1.5
-  _shipBulletThrust: 1
+  _shipBulletThrust: 4
   _bigAsteroidScore: 20
   _mediumAsteroidScore: 50
   _smallAsteroidScore: 100
-  _asteroidCountForFirstLevel: 5
+  _asteroidCountForFirstLevel: 3
   _additionalAsteroidsCountForNewLevel: 3
+  _mediumAsteroidsCount: 2
+  _smallAsteroidsCount: 2

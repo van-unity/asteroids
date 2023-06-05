@@ -3,11 +3,6 @@ using UnityEngine;
 using Zenject;
 
 namespace RovioAsteroids {
-    public interface IOutOfBoundsHandler {
-        Vector3 GetPosition();
-        void OnOutOfBounds();
-    }
-    
     public class OutOfBoundsChecker : MonoBehaviour, IOutOfBoundsChecker {
         private List<IOutOfBoundsHandler> _items;
 

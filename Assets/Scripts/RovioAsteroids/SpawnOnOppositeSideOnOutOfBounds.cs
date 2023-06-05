@@ -19,6 +19,7 @@ namespace RovioAsteroids {
         }
 
         private async void OnEnable() {
+            await Task.Yield();//waiting one frame 
             _registerCancellation = new CancellationTokenSource();
             while (_outOfBoundsChecker == null) {
                 await Task.Delay((int)(Time.deltaTime * 1000), _registerCancellation.Token);

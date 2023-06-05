@@ -31,6 +31,7 @@ namespace RovioAsteroids {
                 }
 
                 spawnable.SetActive(true);
+                spawnable.OnSpawn();
                 return spawnable;
             }
 
@@ -38,10 +39,12 @@ namespace RovioAsteroids {
             var newItem = await CreateTask();
             _pool[_size - 1] = newItem;
             newItem.SetActive(true);
+            newItem.OnSpawn();
             return newItem;
         }
 
         public void Despawn(T objectToDespawn) {
+            objectToDespawn.OnDespawn();
             objectToDespawn.SetActive(false);
         }
 

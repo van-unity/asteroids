@@ -95,12 +95,13 @@ namespace RovioAsteroids {
             var velocity = GetVelocityForMediumAsteroid();
             var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
                 _gameSettings.MediumAsteroidAngularVelocityRange.y);
-            asteroid.SetPosition(position);
+            var randomPosition = Random.insideUnitCircle;
+            asteroid.SetPosition(position + new Vector3(randomPosition.x, randomPosition.y));
             asteroid.SetVelocity(velocity);
             asteroid.SetAngularVelocity(angularVelocity);
             _gameplayModel.OnAsteroidGenerated();
         }
-        
+
         private Vector2 GetVelocityForMediumAsteroid() {
             var xVelocity = Random.Range(_gameSettings.MediumAsteroidSpeedRange.x,
                 _gameSettings.MediumAsteroidSpeedRange.y);
@@ -120,7 +121,7 @@ namespace RovioAsteroids {
             asteroid.SetAngularVelocity(angularVelocity);
             _gameplayModel.OnAsteroidGenerated();
         }
-        
+
         private Vector2 GetVelocityForSmallAsteroid() {
             var xVelocity = Random.Range(_gameSettings.SmallAsteroidSpeedRange.x,
                 _gameSettings.SmallAsteroidSpeedRange.y);
