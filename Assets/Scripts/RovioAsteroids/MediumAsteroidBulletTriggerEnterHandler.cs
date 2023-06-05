@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 namespace RovioAsteroids {
-    public class BigAsteroidBulletTriggerHandler : MonoBehaviour, ITriggerHandler<IAsteroid> {
+    public class MediumAsteroidBulletTriggerEnterHandler : MonoBehaviour, ITriggerEnterHandler<IAsteroid> {
         private IPool<IAsteroid> _pool;
 
         [Inject] private readonly IGameplayModel _gameplayModel;
@@ -15,12 +15,12 @@ namespace RovioAsteroids {
 
         public void HandleTriggerEnter(IAsteroid asteroid, Collider2D other) {
             if (other.CompareTag("PlayerBullet")) {
-                for (int i = 0; i < _gameSettings.MediumAsteroidsCount; i++) {
-                    _asteroidsManager.InstantiateMediumAsteroidAsync(asteroid.GetPosition());
+                for (int i = 0; i < _gameSettings.SmallAsteroidsCount; i++) {
+                    _asteroidsManager.InstantiateSmallAsteroidAsync(asteroid.GetPosition());
                 }
 
                 _pool.Despawn(asteroid);
-                _gameplayModel.OnAsteroidDestroyed(AsteroidType.Big);
+                _gameplayModel.OnAsteroidDestroyed(AsteroidType.Medium);
             }
         }
     }

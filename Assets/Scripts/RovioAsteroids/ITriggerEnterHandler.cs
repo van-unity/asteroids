@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace RovioAsteroids {
-    public interface ITriggerHandler<T> {
+    public interface ITriggerEnterHandler<T> {
         void HandleTriggerEnter(T self, Collider2D other);
     }
 }

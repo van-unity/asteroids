@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace RovioAsteroids {
-    public class BulletAsteroidTriggerEnter : MonoBehaviour, ITriggerHandler<IBullet> {
+    public class BulletAsteroidTriggerEnterEnter : MonoBehaviour, ITriggerEnterHandler<IBullet> {
         private IPool<IBullet> _pool;
 
         private void Start() {

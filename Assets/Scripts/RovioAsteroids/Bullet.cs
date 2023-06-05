@@ -9,7 +9,7 @@ namespace RovioAsteroids {
         private Rigidbody2D _rigidbody;
         private Collider2D _collider2D;
 
-        private ITriggerHandler<IBullet>[] _triggerHandlers;
+        private ITriggerEnterHandler<IBullet>[] _triggerEnterHandlers;
 
         public GameObject GameObject => _gameObject;
         public bool IsActive => _gameObject.activeSelf;
@@ -19,7 +19,7 @@ namespace RovioAsteroids {
             _transform = _gameObject.transform;
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
             _collider2D = _gameObject.GetComponent<Collider2D>();
-            _triggerHandlers = GetComponents<ITriggerHandler<IBullet>>();
+            _triggerEnterHandlers = GetComponents<ITriggerEnterHandler<IBullet>>();
         }
 
         public void SetPosition(Vector3 position) {
@@ -39,7 +39,7 @@ namespace RovioAsteroids {
         }
 
         private void OnTriggerEnter2D(Collider2D col) {
-            foreach (var triggerHandler in _triggerHandlers) {
+            foreach (var triggerHandler in _triggerEnterHandlers) {
                 triggerHandler.HandleTriggerEnter(this, col);
             }
         }
