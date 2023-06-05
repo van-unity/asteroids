@@ -3,8 +3,14 @@ using UnityEngine;
 using Zenject;
 
 namespace RovioAsteroids {
+    public interface IShip {
+        void SetActive(bool isActive);
+    }
+    
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Ship : MonoBehaviour {
+    public class Ship : MonoBehaviour, IShip {
+        [Inject] private readonly IGameSettings _settings;
+        
         [SerializeField] private GameObject _thrustParticle;
         [SerializeField] private float _thrustForce;
         [SerializeField] private float _torque;
@@ -13,16 +19,19 @@ namespace RovioAsteroids {
         private GameObject _gameObject;
         private Transform _transform;
         private Rigidbody2D _rigidbody;
-
-        [Inject] private readonly IGameSettings _settings;
-
         private IPool<IBullet> _bulletPool;
         private bool _shoot;
+        private ICollisionEnterHandler<IShip>[] _collisionEnterHandlers;
 
+        public void SetActive(bool isActive) {
+            _gameObject.SetActive(isActive);
+        }
+        
         private void Awake() {
             _gameObject = gameObject;
             _transform = _gameObject.transform;
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
+            _collisionEnterHandlers = _gameObject.GetComponents<ICollisionEnterHandler<IShip>>();
         }
 
         private void Start() {
@@ -56,8 +65,10 @@ namespace RovioAsteroids {
             bullet.SetForce(_transform.up * _settings.ShipBulletThrust);
         }
 
-        private void OnCollisionEnter2D(Collision2D col) {
-            
+        private void OnCollisionEnter2D(Collision2D collision) {
+            foreach (var collisionEnterHandler in _collisionEnterHandlers) {
+                collisionEnterHandler.HandleCollisionEnter(this, collision);
+            }
         }
     }
 }
