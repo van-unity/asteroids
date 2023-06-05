@@ -55,5 +55,9 @@ namespace RovioAsteroids {
             bullet.SetPosition(_bulletPosition.position);
             bullet.SetForce(_transform.up * _settings.ShipBulletThrust);
         }
+
+        private void OnCollisionEnter2D(Collision2D col) {
+            
+        }
     }
 }

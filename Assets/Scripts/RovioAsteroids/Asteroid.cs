@@ -10,8 +10,9 @@ namespace RovioAsteroids {
         private Transform _transform;
         private Rigidbody2D _rigidbody;
         private Collider2D _collider2D;
-        private IAsteroidTriggerHandler[] _triggerEnterHandlers;
+        private ITriggerHandler<IAsteroid>[] _triggerEnterHandlers;
 
+        public GameObject GameObject => _gameObject;
         public bool IsActive => _gameObject.activeSelf;
 
         private void Awake() {
@@ -19,7 +20,7 @@ namespace RovioAsteroids {
             _transform = _gameObject.GetComponent<Transform>();
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
             _collider2D = _gameObject.GetComponent<Collider2D>();
-            _triggerEnterHandlers = _gameObject.GetComponents<IAsteroidTriggerHandler>();
+            _triggerEnterHandlers = _gameObject.GetComponents<ITriggerHandler<IAsteroid>>();
         }
 
         public void SetParent(Transform parent) {

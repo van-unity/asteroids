@@ -50,8 +50,20 @@ namespace RovioAsteroids {
 
         public void Clear() {
             foreach (var spawnable in _pool) {
-                spawnable.SetActive(false);
+                Despawn(spawnable);
             }
         }
+
+        private void OnDestroy() {
+            ReleaseAllAsync();
+        }
+
+        private async void ReleaseAllAsync() {
+            foreach (var spawnable in _pool) {
+                await ReleaseTask(spawnable);
+            }
+        }
+        
+        protected abstract Task ReleaseTask(T objectToRelease);
     }
 }

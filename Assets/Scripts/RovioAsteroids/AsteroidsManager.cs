@@ -80,7 +80,9 @@ namespace RovioAsteroids {
             }
 
             var screenPosition = new Vector3(x, y, _mainCamera.NearClipPlane());
-            return _mainCamera.ViewportToWorldPoint(screenPosition);
+            screenPosition = _mainCamera.ViewportToWorldPoint(screenPosition);
+            screenPosition.z = 0;
+            return screenPosition;
         }
 
         private Vector2 GetVelocityForBigAsteroid() {
@@ -96,7 +98,7 @@ namespace RovioAsteroids {
             var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
                 _gameSettings.MediumAsteroidAngularVelocityRange.y);
             var randomPosition = Random.insideUnitCircle;
-            asteroid.SetPosition(position + new Vector3(randomPosition.x, randomPosition.y));
+            asteroid.SetPosition(position + new Vector3(randomPosition.x, randomPosition.y, -position.z));//setting z to 0
             asteroid.SetVelocity(velocity);
             asteroid.SetAngularVelocity(angularVelocity);
             _gameplayModel.OnAsteroidGenerated();

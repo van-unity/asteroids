@@ -8,9 +8,10 @@ namespace RovioAsteroids {
         private Transform _transform;
         private Rigidbody2D _rigidbody;
         private Collider2D _collider2D;
-        
-        private IBulletTriggerHandler[] _triggerHandlers;
-        
+
+        private ITriggerHandler<IBullet>[] _triggerHandlers;
+
+        public GameObject GameObject => _gameObject;
         public bool IsActive => _gameObject.activeSelf;
 
         private void Awake() {
@@ -18,13 +19,13 @@ namespace RovioAsteroids {
             _transform = _gameObject.transform;
             _rigidbody = _gameObject.GetComponent<Rigidbody2D>();
             _collider2D = _gameObject.GetComponent<Collider2D>();
-            _triggerHandlers = GetComponents<IBulletTriggerHandler>();
+            _triggerHandlers = GetComponents<ITriggerHandler<IBullet>>();
         }
 
         public void SetPosition(Vector3 position) {
             _transform.position = position;
         }
-        
+
         public void SetParent(Transform parent) {
             _transform.SetParent(parent);
         }

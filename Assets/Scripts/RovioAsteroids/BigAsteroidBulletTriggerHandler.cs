@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 namespace RovioAsteroids {
-    public class BigAsteroidBulletTriggerHandler : MonoBehaviour, IAsteroidTriggerHandler {
+    public class BigAsteroidBulletTriggerHandler : MonoBehaviour, ITriggerHandler<IAsteroid> {
         private IPool<IAsteroid> _pool;
 
         [Inject] private readonly IGameplayModel _gameplayModel;
