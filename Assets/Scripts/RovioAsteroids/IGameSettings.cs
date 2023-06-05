@@ -9,5 +9,6 @@ namespace RovioAsteroids {
         Vector2 MediumAsteroidAngularVelocityRange { get; }
         Vector2 SmallAsteroidAngularVelocityRange { get; }
         float AsteroidsSpeedLevelMultiplier { get; }
+        float ShipBulletThrust { get; }
     }
 }

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace RovioAsteroids {
@@ -13,7 +12,7 @@ namespace RovioAsteroids {
         public async Task<IAsteroid> CreateAsync(AsteroidType asteroidType) {
             var path = _catalog.GetAsteroidPathByType(asteroidType);
             var asteroid = await Addressables.InstantiateAsync(path).Task;
-
+            
             return asteroid.GetComponent<IAsteroid>();
         }
     }

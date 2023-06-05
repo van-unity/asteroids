@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace RovioAsteroids {
     public abstract class MonoBehaviourObjectPoolBase<T> : MonoBehaviour, IPool<T> where T : ISpawnable {
@@ -8,24 +9,20 @@ namespace RovioAsteroids {
         [SerializeField] private int _size;
         private T[] _pool;
 
-        public bool IsReady { get; private set; }
-
-        private async void Start() {
-            await InitializeAsync();
-        }
-
-        private async Task InitializeAsync() {
+        private void Start() {
             _pool = new T[_size];
             for (int i = 0; i < _size; i++) {
-                _pool[i] = await Create();
-                _pool[i].SetParent(_container);
-                _pool[i].SetActive(false);
+                CreateAsync(i);
             }
-
-            IsReady = true;
         }
 
-        protected abstract Task<T> Create();
+        private async void CreateAsync(int index) {
+            _pool[index] = await CreateTask();
+            _pool[index].SetParent(_container);
+            _pool[index].SetActive(false);
+        }
+
+        protected abstract Task<T> CreateTask();
 
         public async Task<T> SpawnAsync() {
             foreach (var spawnable in _pool) {
@@ -38,7 +35,7 @@ namespace RovioAsteroids {
             }
 
             Array.Resize(ref _pool, ++_size);
-            var newItem = await Create();
+            var newItem = await CreateTask();
             _pool[_size - 1] = newItem;
             newItem.SetActive(true);
             return newItem;

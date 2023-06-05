@@ -13,21 +13,22 @@ public class GameplayInstaller : MonoInstaller<GameplayInstaller> {
 
         Container.BindInterfacesAndSelfTo<AsteroidAddressableCatalog>()
             .FromInstance(_asteroidAddressableCatalog)
-            .AsSingle()
-            .NonLazy();
+            .AsSingle();
 
         Container.BindInterfacesAndSelfTo<AsteroidFactory>()
-            .AsSingle()
-            .NonLazy();
+            .AsSingle();
 
         Container.BindInterfacesAndSelfTo<MainCamera>()
             .FromComponentInHierarchy()
-            .AsSingle()
-            .NonLazy();
-
+            .AsSingle();
+        
         Container.BindInterfacesAndSelfTo<OutOfBoundsChecker>()
             .FromComponentInHierarchy()
             .AsSingle()
             .NonLazy();
+
+        Container.BindInterfacesAndSelfTo<BulletFactory>()
+            .FromComponentInHierarchy()
+            .AsSingle();
     }
 }

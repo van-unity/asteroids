@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6555400293004709407}
   - component: {fileID: -2249207191129158527}
   m_Layer: 6
-  m_Name: medium-asteroid
+  m_Name: MediumAsteroid
   m_TagString: MediumAsteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c07ab84306bb84c798b8949f0ab31437, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -12,6 +12,7 @@ TagManager:
   - BigAsteroidPool
   - MediumAsteroidPool
   - SmallAsteroidPool
+  - BulletPool
   layers:
   - Default
   - TransparentFX

@@ -7,8 +7,6 @@ namespace RovioAsteroids {
         [SerializeField] private AsteroidType _asteroidType;
         [Inject] private readonly IAsteroidFactory _factory;
 
-        protected override Task<IAsteroid> Create() {
-            return _factory.CreateAsync(_asteroidType);
-        }
+        protected override Task<IAsteroid> CreateTask() => _factory.CreateAsync(_asteroidType);
     }
 }

@@ -1,10 +1,14 @@
-using System;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
 namespace RovioAsteroids {
     public class AsteroidsManager : MonoBehaviour {
+        private enum AsteroidPlacement {
+            Bottom = 0,
+            Top = 1
+        }
+
         private IPool<IAsteroid> _bigAsteroidPool;
         private IPool<IAsteroid> _mediumAsteroidPool;
         private IPool<IAsteroid> _smallAsteroidPool;
@@ -24,48 +28,54 @@ namespace RovioAsteroids {
         private async void Update() {
             if (Input.GetKeyDown(KeyCode.A)) {
                 var asteroid = await _bigAsteroidPool.SpawnAsync();
-                var position = CreateRandomPosition();
+                var position = CreateRandomPosition(out var placement);
                 var velocity = GetVelocityForBigAsteroid();
+                if (placement == AsteroidPlacement.Top) {
+                    velocity.y *= -1;
+                }
+
                 var angularVelocity = Random.Range(_gameSettings.BigAsteroidAngularVelocityRange.x,
                     _gameSettings.BigAsteroidAngularVelocityRange.y);
                 asteroid.SetPosition(position);
                 asteroid.SetVelocity(velocity);
                 asteroid.SetAngularVelocity(angularVelocity);
             }
-            else if (Input.GetKeyDown(KeyCode.S)) {
-                var asteroid = await _smallAsteroidPool.SpawnAsync();
-
-                var position = CreateRandomPosition();
-                var velocity = GetVelocityForSmallAsteroid();
-                var angularVelocity = Random.Range(_gameSettings.SmallAsteroidAngularVelocityRange.x,
-                    _gameSettings.SmallAsteroidAngularVelocityRange.y);
-                asteroid.SetPosition(position);
-                asteroid.SetVelocity(velocity);
-                asteroid.SetAngularVelocity(angularVelocity);
-            }
-            else if (Input.GetKeyDown(KeyCode.M)) {
-                var asteroid = await _mediumAsteroidPool.SpawnAsync();
-
-                var position = CreateRandomPosition();
-                var velocity = GetVelocityForMediumAsteroid();
-                var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
-                    _gameSettings.MediumAsteroidAngularVelocityRange.y);
-                asteroid.SetPosition(position);
-                asteroid.SetVelocity(velocity);
-                asteroid.SetAngularVelocity(angularVelocity);
-            }
+            // else if (Input.GetKeyDown(KeyCode.S)) {
+            //     var asteroid = await _smallAsteroidPool.SpawnAsync();
+            //
+            //     var position = CreateRandomPosition();
+            //     var velocity = GetVelocityForSmallAsteroid();
+            //     var angularVelocity = Random.Range(_gameSettings.SmallAsteroidAngularVelocityRange.x,
+            //         _gameSettings.SmallAsteroidAngularVelocityRange.y);
+            //     asteroid.SetPosition(position);
+            //     asteroid.SetVelocity(velocity);
+            //     asteroid.SetAngularVelocity(angularVelocity);
+            // }
+            // else if (Input.GetKeyDown(KeyCode.M)) {
+            //     var asteroid = await _mediumAsteroidPool.SpawnAsync();
+            //
+            //     var position = CreateRandomPosition();
+            //     var velocity = GetVelocityForMediumAsteroid();
+            //     var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
+            //         _gameSettings.MediumAsteroidAngularVelocityRange.y);
+            //     asteroid.SetPosition(position);
+            //     asteroid.SetVelocity(velocity);
+            //     asteroid.SetAngularVelocity(angularVelocity);
+            // }
         }
 
-        private Vector3 CreateRandomPosition() {
-            var x = Random.Range(0, Screen.width);
+        private Vector3 CreateRandomPosition(out AsteroidPlacement placement) {
+            placement = AsteroidPlacement.Bottom;
+            var x = Random.Range(0f, 1f);
             var y = 0; //on bottom
             if (Random.Range(0f, 1f) > .5f) {
                 //generate on top
-                y = Screen.height;
+                y = 1;
+                placement = AsteroidPlacement.Top;
             }
 
             var screenPosition = new Vector3(x, y, _mainCamera.NearClipPlane());
-            return _mainCamera.ScreenToWorldPoint(screenPosition);
+            return _mainCamera.ViewportToWorldPoint(screenPosition);
         }
 
         private Vector2 GetVelocityForBigAsteroid() {

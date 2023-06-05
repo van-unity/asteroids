@@ -10,25 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Asteroids
+  m_Name: Bullets
   m_EditorClassIdentifier: 
-  m_GroupName: Asteroids
+  m_GroupName: Bullets
   m_Data:
     m_SerializedData: []
-  m_GUID: cb5db8b43550e4b8e92a35e7c55039d4
+  m_GUID: 9cc8faa503ff44499b80dadd96afb060
   m_SerializeEntries:
-  - m_GUID: 7700b194361bd494ca80e6d0d04d33c1
-    m_Address: BigAsteroid
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 323044ba671304edba75cfaa9c6810eb
-    m_Address: MediumAsteroid
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0a0cf80c75d644853bd8f93390d989e6
-    m_Address: SmallAsteroid
+  - m_GUID: 1937b4d994b8a4d8980aba78f9226695
+    m_Address: PlayerBullet
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -36,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 59d85d56435cd413098422e7a5f6b35b, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: e601c8893e0264a29b907c1bbb3a4721, type: 2}
-    - {fileID: 11400000, guid: 2164e98ec0d0f4e2fa6cee7b83debb6b, type: 2}
+    - {fileID: 11400000, guid: e6d140ea59a3b4e9380e136ff092afba, type: 2}
+    - {fileID: 11400000, guid: cfc37441b058843aeb1a06348779859f, type: 2}
