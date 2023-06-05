@@ -7,6 +7,10 @@ public class GameplayInstaller : MonoInstaller<GameplayInstaller> {
     [SerializeField] private GameSettings _gameSettings;
 
     public override void InstallBindings() {
+        Container.BindInterfacesAndSelfTo<GameplayModel>()
+            .AsSingle()
+            .NonLazy();
+
         Container.BindInterfacesAndSelfTo<GameSettings>()
             .FromInstance(_gameSettings)
             .AsSingle();
@@ -21,7 +25,7 @@ public class GameplayInstaller : MonoInstaller<GameplayInstaller> {
         Container.BindInterfacesAndSelfTo<MainCamera>()
             .FromComponentInHierarchy()
             .AsSingle();
-        
+
         Container.BindInterfacesAndSelfTo<OutOfBoundsChecker>()
             .FromComponentInHierarchy()
             .AsSingle()
@@ -30,5 +34,10 @@ public class GameplayInstaller : MonoInstaller<GameplayInstaller> {
         Container.BindInterfacesAndSelfTo<BulletFactory>()
             .FromComponentInHierarchy()
             .AsSingle();
+
+        Container.BindInterfacesAndSelfTo<AsteroidsManager>()
+            .FromComponentInHierarchy()
+            .AsSingle()
+            .NonLazy();
     }
 }

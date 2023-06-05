@@ -20,3 +20,8 @@ MonoBehaviour:
   _smallAsteroidAngularVelocityRange: {x: 180, y: 270}
   _asteroidsSpeedLevelMultiplier: 1.5
   _shipBulletThrust: 1
+  _bigAsteroidScore: 20
+  _mediumAsteroidScore: 50
+  _smallAsteroidScore: 100
+  _asteroidCountForFirstLevel: 5
+  _additionalAsteroidsCountForNewLevel: 3

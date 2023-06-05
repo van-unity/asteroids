@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RovioAsteroids {
     public interface IOutOfBoundsChecker {
-        void Register(Transform objectToRegister);
-        void UnRegister(Transform objectToUnRegister);
+        void Register(IOutOfBoundsHandler objectToRegister);
+        void UnRegister(IOutOfBoundsHandler objectToUnRegister);
     }
 }

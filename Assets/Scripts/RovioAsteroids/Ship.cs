@@ -14,7 +14,6 @@ namespace RovioAsteroids {
         private Transform _transform;
         private Rigidbody2D _rigidbody;
 
-        [Inject] private readonly IOutOfBoundsChecker _outOfBoundsChecker;
         [Inject] private readonly IGameSettings _settings;
 
         private IPool<IBullet> _bulletPool;
@@ -27,7 +26,6 @@ namespace RovioAsteroids {
         }
 
         private void Start() {
-            _outOfBoundsChecker.Register(_transform);
             _bulletPool = GameObject.FindWithTag("BulletPool").GetComponent<IPool<IBullet>>();
         }
 
@@ -56,10 +54,6 @@ namespace RovioAsteroids {
             var bullet = await _bulletPool.SpawnAsync();
             bullet.SetPosition(_bulletPosition.position);
             bullet.SetForce(_transform.up * _settings.ShipBulletThrust);
-        }
-
-        private void OnDestroy() {
-            _outOfBoundsChecker.UnRegister(_transform);
         }
     }
 }

@@ -1,9 +1,15 @@
+using System;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
 namespace RovioAsteroids {
-    public class AsteroidsManager : MonoBehaviour {
+    public interface IAsteroidsManager {
+        void InstantiateMediumAsteroidAsync(Vector3 position);
+        void InstantiateSmallAsteroidAsync(Vector3 position);
+    }
+
+    public class AsteroidsManager : MonoBehaviour, IAsteroidsManager {
         private enum AsteroidPlacement {
             Bottom = 0,
             Top = 1
@@ -15,6 +21,7 @@ namespace RovioAsteroids {
 
         [Inject] private readonly IMainCamera _mainCamera;
         [Inject] private readonly IGameSettings _gameSettings;
+        [Inject] private readonly IGameplayModel _gameplayModel;
 
         private void Awake() {
             _bigAsteroidPool = GameObject.FindGameObjectWithTag("BigAsteroidPool")
@@ -25,43 +32,41 @@ namespace RovioAsteroids {
                 .GetComponent<IPool<IAsteroid>>();
         }
 
-        private async void Update() {
-            if (Input.GetKeyDown(KeyCode.A)) {
-                var asteroid = await _bigAsteroidPool.SpawnAsync();
-                var position = CreateRandomPosition(out var placement);
-                var velocity = GetVelocityForBigAsteroid();
-                if (placement == AsteroidPlacement.Top) {
-                    velocity.y *= -1;
-                }
+        private void Start() {
+            _gameplayModel.GameStarted += GenerateAsteroidsForLevel;
+            _gameplayModel.LevelChanged += GameplayModelOnLevelChanged;
+        }
 
-                var angularVelocity = Random.Range(_gameSettings.BigAsteroidAngularVelocityRange.x,
-                    _gameSettings.BigAsteroidAngularVelocityRange.y);
-                asteroid.SetPosition(position);
-                asteroid.SetVelocity(velocity);
-                asteroid.SetAngularVelocity(angularVelocity);
+        private void GenerateAsteroidsForLevel() {
+            var asteroidsCount = GetBigAsteroidsCountForLevel();
+            for (int i = 0; i < asteroidsCount; i++) {
+                InstantiateBigAsteroidAsync();
             }
-            // else if (Input.GetKeyDown(KeyCode.S)) {
-            //     var asteroid = await _smallAsteroidPool.SpawnAsync();
-            //
-            //     var position = CreateRandomPosition();
-            //     var velocity = GetVelocityForSmallAsteroid();
-            //     var angularVelocity = Random.Range(_gameSettings.SmallAsteroidAngularVelocityRange.x,
-            //         _gameSettings.SmallAsteroidAngularVelocityRange.y);
-            //     asteroid.SetPosition(position);
-            //     asteroid.SetVelocity(velocity);
-            //     asteroid.SetAngularVelocity(angularVelocity);
-            // }
-            // else if (Input.GetKeyDown(KeyCode.M)) {
-            //     var asteroid = await _mediumAsteroidPool.SpawnAsync();
-            //
-            //     var position = CreateRandomPosition();
-            //     var velocity = GetVelocityForMediumAsteroid();
-            //     var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
-            //         _gameSettings.MediumAsteroidAngularVelocityRange.y);
-            //     asteroid.SetPosition(position);
-            //     asteroid.SetVelocity(velocity);
-            //     asteroid.SetAngularVelocity(angularVelocity);
-            // }
+        }
+
+        private void GameplayModelOnLevelChanged() {
+            GenerateAsteroidsForLevel();
+        }
+
+        private int GetBigAsteroidsCountForLevel() {
+            return _gameSettings.AsteroidCountForFirstLevel +
+                   _gameplayModel.Level * _gameSettings.AdditionalAsteroidsCountForNewLevel;
+        }
+
+        private async void InstantiateBigAsteroidAsync() {
+            var asteroid = await _bigAsteroidPool.SpawnAsync();
+            var position = CreateRandomPosition(out var placement);
+            var velocity = GetVelocityForBigAsteroid();
+            if (placement == AsteroidPlacement.Top) {
+                velocity.y *= -1;
+            }
+
+            var angularVelocity = Random.Range(_gameSettings.BigAsteroidAngularVelocityRange.x,
+                _gameSettings.BigAsteroidAngularVelocityRange.y);
+            asteroid.SetPosition(position);
+            asteroid.SetVelocity(velocity);
+            asteroid.SetAngularVelocity(angularVelocity);
+            _gameplayModel.OnAsteroidGenerated();
         }
 
         private Vector3 CreateRandomPosition(out AsteroidPlacement placement) {
@@ -85,6 +90,17 @@ namespace RovioAsteroids {
             return new Vector2(xVelocity, yVelocity);
         }
 
+        public async void InstantiateMediumAsteroidAsync(Vector3 position) {
+            var asteroid = await _mediumAsteroidPool.SpawnAsync();
+            var velocity = GetVelocityForMediumAsteroid();
+            var angularVelocity = Random.Range(_gameSettings.MediumAsteroidAngularVelocityRange.x,
+                _gameSettings.MediumAsteroidAngularVelocityRange.y);
+            asteroid.SetPosition(position);
+            asteroid.SetVelocity(velocity);
+            asteroid.SetAngularVelocity(angularVelocity);
+            _gameplayModel.OnAsteroidGenerated();
+        }
+        
         private Vector2 GetVelocityForMediumAsteroid() {
             var xVelocity = Random.Range(_gameSettings.MediumAsteroidSpeedRange.x,
                 _gameSettings.MediumAsteroidSpeedRange.y);
@@ -94,6 +110,17 @@ namespace RovioAsteroids {
             return new Vector2(xVelocity, yVelocity);
         }
 
+        public async void InstantiateSmallAsteroidAsync(Vector3 position) {
+            var asteroid = await _smallAsteroidPool.SpawnAsync();
+            var velocity = GetVelocityForSmallAsteroid();
+            var angularVelocity = Random.Range(_gameSettings.SmallAsteroidAngularVelocityRange.x,
+                _gameSettings.SmallAsteroidAngularVelocityRange.y);
+            asteroid.SetPosition(position);
+            asteroid.SetVelocity(velocity);
+            asteroid.SetAngularVelocity(angularVelocity);
+            _gameplayModel.OnAsteroidGenerated();
+        }
+        
         private Vector2 GetVelocityForSmallAsteroid() {
             var xVelocity = Random.Range(_gameSettings.SmallAsteroidSpeedRange.x,
                 _gameSettings.SmallAsteroidSpeedRange.y);
@@ -101,6 +128,11 @@ namespace RovioAsteroids {
                 _gameSettings.SmallAsteroidSpeedRange.y);
 
             return new Vector2(xVelocity, yVelocity);
+        }
+
+        private void OnDestroy() {
+            _gameplayModel.GameStarted -= GenerateAsteroidsForLevel;
+            _gameplayModel.LevelChanged -= GameplayModelOnLevelChanged;
         }
     }
 }

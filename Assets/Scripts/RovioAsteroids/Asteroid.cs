@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +9,6 @@ namespace RovioAsteroids {
         private Transform _transform;
         private Rigidbody2D _rigidbody;
         private IAsteroidTriggerEnterHandler[] _triggerEnterHandlers;
-
-        [Inject] private readonly IOutOfBoundsChecker _outOfBoundsChecker;
 
         public bool IsActive => _gameObject.activeSelf;
 
@@ -32,24 +31,20 @@ namespace RovioAsteroids {
             _transform.position = position;
         }
 
+        public Vector3 GetPosition() => _transform.position;
+
         public void SetAngularVelocity(float angularVelocity) {
             _rigidbody.AddTorque(angularVelocity);
         }
 
-        private void OnTriggerEnter(Collider other) {
+        private void OnTriggerEnter2D(Collider2D col) {
             foreach (var triggerEnterHandler in _triggerEnterHandlers) {
-                triggerEnterHandler.HandleTriggerEnter(this, other);
+                triggerEnterHandler.HandleTriggerEnter(this, col);
             }
         }
 
         public void SetActive(bool isActive) {
             _gameObject.SetActive(isActive);
-            if (isActive) {
-                _outOfBoundsChecker.Register(_transform);
-            }
-            else {
-                _outOfBoundsChecker.UnRegister(_transform);
-            }
         }
     }
 }

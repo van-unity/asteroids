@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5438132328178839615}
   - component: {fileID: 9103400112662169156}
   - component: {fileID: -7797629208908865708}
+  - component: {fileID: 6304743859885087430}
   m_Layer: 6
   m_Name: SmallAsteroid
   m_TagString: SmallAsteroid
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4864187725631086140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1000, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,3 +176,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _containerSource: 0
+--- !u!114 &6304743859885087430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864187725631086140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c8beafe4ae4c7797e36308bb7d50af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

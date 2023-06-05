@@ -11,6 +11,13 @@ namespace RovioAsteroids {
         [SerializeField] private Vector2 _smallAsteroidAngularVelocityRange;
         [SerializeField] private float _asteroidsSpeedLevelMultiplier;
         [SerializeField] private float _shipBulletThrust;
+        [SerializeField] private int _bigAsteroidScore;
+        [SerializeField] private int _mediumAsteroidScore;
+        [SerializeField] private int _smallAsteroidScore;
+        [SerializeField] private int _asteroidCountForFirstLevel;
+        [SerializeField] private int _additionalAsteroidsCountForNewLevel;
+        [SerializeField] private int _mediumAsteroidsCount;
+        [SerializeField] private int _smallAsteroidsCount;
 
         public Vector2 BigAsteroidSpeedRange => _bigAsteroidSpeedRange;
         public Vector2 MediumAsteroidSpeedRange => _mediumAsteroidSpeedRange;
@@ -20,5 +27,12 @@ namespace RovioAsteroids {
         public Vector2 SmallAsteroidAngularVelocityRange => _smallAsteroidAngularVelocityRange;
         public float AsteroidsSpeedLevelMultiplier => _asteroidsSpeedLevelMultiplier;
         public float ShipBulletThrust => _shipBulletThrust;
+        public int BigAsteroidScore => _bigAsteroidScore;
+        public int MediumAsteroidScore => _mediumAsteroidScore;
+        public int SmallAsteroidScore => _smallAsteroidScore;
+        public int AsteroidCountForFirstLevel => _asteroidCountForFirstLevel;
+        public int AdditionalAsteroidsCountForNewLevel => _additionalAsteroidsCountForNewLevel;
+        public int MediumAsteroidsCount => _mediumAsteroidsCount;
+        public int SmallAsteroidsCount => _smallAsteroidsCount;
     }
 }
