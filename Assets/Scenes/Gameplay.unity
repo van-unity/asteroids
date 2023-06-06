@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 857142729}
-  _size: 100
+  _size: 120
   _asteroidType: 0
 --- !u!4 &857142729
 Transform:
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 1479211515}
-  _size: 100
+  _size: 60
   _asteroidType: 1
 --- !u!4 &1479211515
 Transform:
@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 1529484656}
-  _size: 100
+  _size: 30
   _asteroidType: 2
 --- !u!4 &1529484656
 Transform:
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 2112969945}
-  _size: 100
+  _size: 20
 --- !u!4 &2112969945
 Transform:
   m_ObjectHideFlags: 0
