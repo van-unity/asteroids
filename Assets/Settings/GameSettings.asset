@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff842b70e0f4f6d9281a93212cbe6bb, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  _initialLifeCount: 3
+  _lifeCountIncreaseScore: 100
   _bigAsteroidSpeedRange: {x: 0.1, y: 1}
   _mediumAsteroidSpeedRange: {x: 1, y: 1.5}
   _smallAsteroidSpeedRange: {x: 1.5, y: 3}
